@@ -9,7 +9,12 @@
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["react", "agensgraph", "vite", "typescript"],
+  "keywords": [
+    "react",
+    "agensgraph",
+    "vite",
+    "typescript"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.11.1",
@@ -24,6 +29,7 @@
     "wouter": "^3.7.1"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.11",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",

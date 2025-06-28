@@ -16,7 +16,8 @@ RUN pnpm install --frozen-lockfile
 # Copy source code
 COPY . .
 
-# Build the application
+# Clean and build the application
+RUN pnpm clean || true
 RUN pnpm build
 
 # Production stage
