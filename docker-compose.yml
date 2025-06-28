@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  db:
+    image: bitnine/agensgraph:2.15          # PostgreSQL 15 + AGE/Cypher
+    environment:
+      POSTGRES_PASSWORD: agenspw
+    ports: 
+      - "5432:5432"
+    volumes:
+      - agensgraph_data:/var/lib/postgresql/data
+
+  browser:                                  # Drag‑n‑drop label & query UI
+    image: bitnine/agensbrowser:v2.1.1
+    environment:
+      AG_DB_HOST: db
+      AG_DB_PORT: 5432
+      AG_DB_USER: postgres
+      AG_DB_PASS: agenspw
+    ports: 
+      - "3001:3001"
+    depends_on: 
+      - db
+
+  api:
+    build: ./api                            # Express + TS
+    environment:
+      DB_HOST: db
+      DB_PASS: agenspw
+      DB_USER: postgres
+      DB_PORT: 5432
+    ports: 
+      - "4000:4000"
+    depends_on: 
+      - db
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+
+  web:
+    build: ./web                            # React 18 + Vite
+    ports: 
+      - "5173:5173"
+    environment:
+      VITE_API_ORIGIN: http://localhost:4000
+    depends_on: 
+      - api
+    volumes:
+      - ./web:/app
+      - /app/node_modules
+
+volumes:
+  agensgraph_data:
